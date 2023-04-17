@@ -2,7 +2,7 @@ import Category from "@/components/Category";
 import HeroBanner from "@/components/HeroBanner";
 import Navbar from "@/components/Navbar";
 import Row from "@/components/Row";
-import { ICart, IProduct } from "@/interface";
+import { ICart } from "@/interface";
 import { Inter } from "next/font/google";
 import Head from "next/head";
 
@@ -60,23 +60,13 @@ export default function Home({
 }
 
 export async function getServerSideProps() {
-  const products = await fetch("https://fakestoreapi.com/products").then(
-    (res) => res.json()
-  );
-  const womenCloths = await fetch(
-    "https://fakestoreapi.com/products/category/women's clothing"
-  ).then((res) => res.json());
-
-  const jewelry = await fetch(
-    "https://fakestoreapi.com/products/category/jewelery"
-  ).then((res) => res.json());
-
-  const categories = products
-    .map((product: IProduct) => product.category)
-    .filter(
-      (value: string, index: number, self: string) =>
-        self.indexOf(value) === index
-    );
+  const [products, womenCloths, jewelry, categories] =
+  await Promise.all([
+    fetch("https://fakestoreapi.com/products").then((res) => res.json()),
+    fetch("https://fakestoreapi.com/products/category/women's clothing").then((res) => res.json()),
+    fetch("https://fakestoreapi.com/products/category/jewelery").then((res) =>res.json()),
+    fetch("https://fakestoreapi.com/products/categories").then((res) =>res.json()),
+  ]);
 
   return {
     props: {

@@ -155,7 +155,7 @@ export const getStaticPaths = async () => {
 
   const paths = products.map((product: ICart) => ({
     params: {
-      slug: product.title,
+      slug: product.id.toString(),
     },
   }));
   return {
