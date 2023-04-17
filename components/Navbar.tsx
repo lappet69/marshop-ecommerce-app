@@ -68,7 +68,7 @@ const Navbar = () => {
             )}
           </div>
           {user ? (
-            user?.photoURL && (
+            user?.photoURL ? (
               <Image
                 src={user?.photoURL}
                 alt=""
@@ -77,6 +77,8 @@ const Navbar = () => {
                 className="w-8 h-8 rounded-full ml-2 -mt-1 cursor-pointer"
                 onClick={logout}
               />
+            ) : (
+              <UserCircleIcon className="icon " onClick={logout} />
             )
           ) : (
             <UserCircleIcon
